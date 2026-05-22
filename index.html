@@ -15929,8 +15929,8 @@ function renderAllSituations() {
         +'<button type="button" class="ssg-bloc-del" onclick="removeSsgBlocFromSit(\''+sit.id+'\','+bi+')" title="Retirer">✕</button>'
         +'</div><div class="ssg-bloc-card-body">'+esc(b.contenu||'')+'</div></div>';
     }).join('');
-    var chipsHtml=_renderCtrChips(sit);
-    var loadBarHtml=_renderLoadBar(sit);
+    var chipsHtml=typeof _renderCtrChips==='function'?_renderCtrChips(sit):'';
+    var loadBarHtml=typeof _renderLoadBar==='function'?_renderLoadBar(sit):'';
     return '<div class="seance-bloc" id="bloc-'+sit.id+'" style="border-left:4px solid var(--navy)">'
       +'<div class="seance-bloc-header">'
       +'<span class="seance-step-badge">'+blockNum+'</span>'
@@ -15957,7 +15957,7 @@ function renderAllSituations() {
       /* --- joueur --- */
       +'<div class="obj-joueur-box">'
       +'<div class="obj-label" style="font-size:11.5px">🗣️ Consigne joueur <span class="obj-hint">— ce qu\'ils cherchent à faire</span></div>'
-      +'<div class="sit-obj-chips">'+SIT_OBJ_CHIPS.map(function(c){var _sel=(sit.objectifJoueur||'').split(' · ').map(function(v){return v.trim();});var active=_sel.indexOf(c)!==-1?' active':'';return '<span class="sit-obj-chip'+active+'" onclick="setSitObj(\''+sit.id+'\','+JSON.stringify(c).replace(/"/g,'&quot;')+')">'+esc(c)+'</span>';}).join('')+'</div>'
+      +'<div class="sit-obj-chips">'+(SIT_OBJ_CHIPS||[]).map(function(c){var _sel=(sit.objectifJoueur||'').split(' · ').map(function(v){return v.trim();});var active=_sel.indexOf(c)!==-1?' active':'';return '<span class="sit-obj-chip'+active+'" onclick="setSitObj(\''+sit.id+'\','+JSON.stringify(c).replace(/"/g,'&quot;')+')">'+esc(c)+'</span>';}).join('')+'</div>'
       +'<div id="soj-hist-'+sit.id+'" class="sit-obj-history" style="display:none">'
       +sitObjJoueurBank.filter(function(v){var _sel=(sit.objectifJoueur||'').split(' · ').map(function(x){return x.trim();});return v&&_sel.indexOf(v)===-1&&!SIT_OBJ_CHIPS.includes(v);}).slice(0,12).map(function(v){
         var sv=JSON.stringify(v).replace(/"/g,'&quot;');
